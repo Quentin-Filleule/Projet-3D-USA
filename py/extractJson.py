@@ -1,10 +1,10 @@
 import json
 
-# Chargement du fichier JSON d'origine
+# load reconstruction.json
 with open('../json/reconstruction.json') as file:
     data = json.load(file)
 
-# Extraction des informations des shots
+# Extract datas from shots
 shots_data = []
 for object in data:
     if 'shots' in object:
@@ -21,13 +21,13 @@ for object in data:
             }
             shots_data.append(shot_info)
 
-# Chargement du fichier JSON de destination
+# load json destination
 with open('../json/coordinates_rota_trans.json') as dest_file:
     dest_data = json.load(dest_file)
 
-# Ajout des informations extraites au fichier JSON de destination
+
 dest_data['shots'] = shots_data
 
-# Écriture des données mises à jour dans le fichier JSON de destination
+# Add all the datas to this file
 with open('../json/coordinates_rota_trans.json', 'w') as dest_file:
     json.dump(dest_data, dest_file, indent=4)

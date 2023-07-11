@@ -5,10 +5,17 @@ import os , os.path
 import sys
 import shutil
 
+############################################ Disclaimer !!!! #############################################################################
+# Befor start this pipeline, you have to be use the virtual env
+# To do that you have to be in the main directory (Pannellum)
+# source 3dproj/bin/activate
+# 3dproj is the name of my Venv
+##########################################################################################################################################
 os.chdir("..")
+
 dir = os.getcwd()
 
-#####################  Delete previous files  ###############################################################################
+#####################  Delete previous files  ############################################################################################
 modif = "Opensfm/OpenSfM/data/berlin/undistorted/depthmaps/*"
 temp = os.path.join(dir,modif) 
 fct =  "rm -r " + temp
@@ -49,34 +56,47 @@ temp = os.path.join(dir,modif)
 fct =  "rm -r " + temp
 os.system(fct)
 
-"""
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/undistorted/images/*")
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/reports/features/*")
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/matches/*")
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/features/*")
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/exif/*")
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/json/reconstruction.json")
+##########################################################################################################################################
 
 
-os.system("rm -r /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/images/*")
-os.system("cp -R /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/img/* /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/images")
+# Copy the images in the directory img in Opensf
+modif = "img/*"
+modif1 = "Opensfm/OpenSfM/data/berlin/images"
+temp = os.path.join(dir,modif) 
+temp1 = os.path.join(dir,modif1) 
+fct =  "cp -R " + temp + " " + temp1
+os.system(fct)
 
-os.chdir('/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM')
+# Use the OpenSFM script 
+os.chdir(dir)
+os.chdir('Opensfm/OpenSfM')
 
-os.system("/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/bin/opensfm_run_all data/berlin")
-os.system("/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/bin/opensfm undistort data/berlin")
-os.system("/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/bin/opensfm compute_depthmaps data/berlin")
+os.system("bin/opensfm_run_all data/berlin")
+os.system("bin/opensfm undistort data/berlin")
+os.system("bin/opensfm compute_depthmaps data/berlin")
 
-os.system("cp /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM/data/berlin/reconstruction.json /mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/json")
+os.chdir(dir)
+
+# Copy the reconstruction file in our json direcory
+modif = "Opensfm/OpenSfM/data/berlin/reconstruction.json"
+modif1 = "json"
+temp = os.path.join(dir,modif) 
+temp1 = os.path.join(dir,modif1) 
+fct =  "cp " + temp + " " + temp1
+os.system(fct)
 
 
-os.chdir('/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/py')
+# Extract all the Data that we need in a new json
+os.chdir("py")
+
 os.system("python3 ./extractJson.py")
 
+# Estimate coordinate of cameras
 os.system("python3 ./estimateCoordinate.py")
 
-os.chdir('/mnt/c/Users/Quentin/Desktop/Cours/Stage_USA/Summer23/Pannellum/Opensfm/OpenSfM')
+os.chdir(dir)
+os.chdir('Opensfm/OpenSfM')
 
+# Open local server to use the OpenSFM viewer
 os.system("python3 viewer/server.py -d data/berlin")
 
-"""

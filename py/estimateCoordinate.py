@@ -80,17 +80,21 @@ for shot in rec.shots.values():
     t_matrix = t
 
 
-    
+    # Estimate the Euler angle of the matrix
     temp_angle = matrix_to_euler_angles(r)
     angle.append(temp_angle)
 
+    # Estimate the 3x3 matrix from our angle-axis matrix
     temp_matrix = angle_axis_to_matrix(temp_angle,r)
     matrix.append(temp_matrix)
 
+    # Transpose the previous matrix
     r_matrix_transpose = temp_matrix.transpose()
 
+    # Negate this matrix
     minus_r_matrix_transpose = -1*r_matrix_transpose
 
+    # multiply this matrix with the transpose ùmatrix
     centre = np.matmul(minus_r_matrix_transpose,t_matrix)
 
     camera_center.append(centre)
@@ -98,7 +102,7 @@ print(camera_center)
 
 
 
-
+# Creates tabs to verify our result
 center_X = []
 center_Y = []
 center_Z = []
@@ -111,15 +115,17 @@ for i in range(len(camera_center)):
     center_Y.append(temp[j+1])
     center_Z.append(temp[j+2])
 
-# Tracé du résultat en 3D
+# Trace 3D figure
 fig = plt.figure()
-ax = fig.add_subplot(projection='3d') # Affichage en 3D
-ax.scatter(center_X, center_Y, center_Z, marker='d')  # Tracé de la courbe 3D
+ax = fig.add_subplot(projection='3d') # Use 3D display
+ax.scatter(center_X, center_Y, center_Z, marker='d')  # Trace points
 plt.title("Points 3D")
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 plt.tight_layout()
+
+# Create a new png images to preview the result
 plt.savefig("mygraph.png")
 
 
