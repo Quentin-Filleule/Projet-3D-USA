@@ -1,12 +1,8 @@
 import math
 import json
-from opensfm import io as sfmio
 from scipy.spatial.transform import Rotation as R
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d 
-
-
 
 def angle_axis_to_matrix(angle, axis):
     # Normalize the axis vector
@@ -60,6 +56,14 @@ def convert_to_pitch_yaw(camera_x, camera_y, camera_z, target_x, target_y, targe
 
 #########################################################################################################################################
 
+
+
+
+
+
+
+
+"""
 camera_center = []
 matrix = []
 angle = []
@@ -74,7 +78,7 @@ for shot in rec.shots.values():
    # shots.values() seems to get you what you need...
     r = shot.pose.rotation
     t = shot.pose.translation
-    org = shot.pose.get_origin() 
+    org = shot.pose.get_origin()
     
     #r_matrix = R.from_euler("xyz", r, degrees=False).as_matrix()
     t_matrix = t
@@ -100,39 +104,7 @@ for shot in rec.shots.values():
     camera_center.append(centre)
 print(camera_center)
 
-
-
-# Creates tabs to verify our result
-center_X = []
-center_Y = []
-center_Z = []
-for i in range(len(camera_center)):
-
-    temp = camera_center[i]
-    
-    j=0
-    center_X.append(temp[j])
-    center_Y.append(temp[j+1])
-    center_Z.append(temp[j+2])
-
-# Trace 3D figure
-fig = plt.figure()
-ax = fig.add_subplot(projection='3d') # Use 3D display
-ax.scatter(center_X, center_Y, center_Z, marker='d')  # Trace points
-plt.title("Points 3D")
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z')
-plt.tight_layout()
-
-# Create a new png images to preview the result
-plt.savefig("mygraph.png")
-
-
-
-
-
-
+"""
 
 
 

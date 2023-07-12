@@ -89,7 +89,11 @@ os.system(fct)
 # Extract all the Data that we need in a new json
 os.chdir("py")
 
+# Extract all the shots' names
 os.system("python3 ./extractJson.py")
+
+# Save coordinate of neightbor in json
+os.system("python3 ./sortPoints.py")
 
 # Estimate coordinate of cameras
 os.system("python3 ./estimateCoordinate.py")
