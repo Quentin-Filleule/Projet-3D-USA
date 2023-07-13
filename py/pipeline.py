@@ -98,9 +98,14 @@ os.system("python3 ./sortPoints.py")
 # Estimate coordinate of cameras
 os.system("python3 ./estimateCoordinate.py")
 
+
+
+# In case we need to see the result in OpenSFM viewver
+"""
 os.chdir(dir)
 os.chdir('Opensfm/OpenSfM')
 
 # Open local server to use the OpenSFM viewer
 os.system("python3 viewer/server.py -d data/berlin")
 
+"""

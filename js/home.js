@@ -2,8 +2,8 @@ import * as timeManager from './timeManager.js';
 
 var hotSpots1 = [
     {
-      pitch: 8.270775531599261, // Angle vertical du point chaud (en degrés)
-      yaw: 168.9643425492632, // Angle horizontal du point chaud (en degrés)
+      pitch: 84.49476784075873, // Angle vertical du point chaud (en degrés)
+      yaw: 117.99488196351149, // Angle horizontal du point chaud (en degrés)
       type: "scene", // Type de point chaud ("info", "scene", "URL", etc.)
       sceneId: "scene2", // Identifiant de la scène à laquelle le point chaud est lié (pour le type "scene")
       targetPitch: 0,
@@ -14,7 +14,7 @@ var hotSpots1 = [
   ];
 
   var bat = {
-    panorama: "../img/00001.jpg",
+    panorama: "../img/00025.jpg",
     hotSpots: hotSpots1 
   };
 

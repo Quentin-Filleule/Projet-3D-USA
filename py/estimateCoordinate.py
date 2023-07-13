@@ -4,6 +4,85 @@ from scipy.spatial.transform import Rotation as R
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+# Estimate vector between 2 cameras and convert it to pitch and yaw for display in Pannellum
+def point_camera(camera_pos, camera_target):
+    x1, y1, z1 = camera_target
+    x2, y2, z2 = camera_pos
+
+    # Normal coordinates
+    direction_x = x2 - x1
+    direction_y = y2 - y1
+    direction_z = z2 - z1
+
+    # Rearange cameras coordinate because they are display along axis Z
+    tampon = direction_z
+    direction_z = direction_y
+    direction_y = direction_x
+    direction_x = tampon
+
+
+    pitch = math.atan2(direction_z, math.sqrt(direction_x**2 + direction_y**2))
+    yaw = math.atan2(direction_y, direction_x)
+
+    pitch_deg = math.degrees(pitch)
+    yaw_deg = math.degrees(yaw)
+
+    return pitch_deg,yaw_deg
+
+#########################################################################################################################################
+
+# load reconstruction.json
+with open('../json/coordinates_rota_trans.json') as file:
+    data = json.load(file)
+
+# Extract datas from shots
+rotation_data = data['rotation']
+translation_data = data['translation']
+neighbors_data = data['neighbors']
+
+i = 0
+j = 0
+
+neighbor_pitch_yaw = []
+#
+for i in range((len(neighbors_data))): 
+
+    img = str(i)
+    compute_tab = []
+    
+    for j in range(len(neighbors_data[img])):
+
+        tab = []
+        camera_pos = translation_data[i]
+        id_camera_dest = neighbors_data[img][j]
+        camera_dest = translation_data[id_camera_dest]
+        pitch,yaw = point_camera(camera_pos, camera_dest)
+        tab.append(pitch)
+        tab.append(yaw)
+        
+        compute_tab.append(tab)
+
+    neighbor_pitch_yaw.append(compute_tab)
+        
+
+# load json destination
+with open('../json/coordinates_rota_trans.json') as dest_file:
+    dest_data = json.load(dest_file)
+
+
+dest_data['neighbor_pitch_yaw'] = neighbor_pitch_yaw
+# Add all the datas to this file
+with open('../json/coordinates_rota_trans.json', 'w') as dest_file:
+    json.dump(dest_data, dest_file, indent=4)
+
+
+
+
+
+"""
+
+
 def angle_axis_to_matrix(angle, axis):
     # Normalize the axis vector
     axis = axis / np.linalg.norm(axis)
@@ -31,39 +110,10 @@ def matrix_to_euler_angles(axis):
     angle = np.arccos(np.clip(np.dot(axis, [1, 0, 0]), -1.0, 1.0))
     return angle
 
+    
 
-def convert_to_pitch_yaw(camera_x, camera_y, camera_z, target_x, target_y, target_z):
-    # Calculate the vector from camera to target
-    dx = target_x - camera_x
-    dy = target_y - camera_y
-    dz = target_z - camera_z
+##############################################################################################################"
 
-    # Calculate the distance from camera to target
-    distance = math.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
-
-    # Calculate the yaw angle
-    yaw = math.atan2(dy, dx)
-
-    # Calculate the pitch angle
-    pitch = math.asin(dz / distance)
-
-    # Convert angles to degrees
-    pitch_deg = math.degrees(pitch)
-    yaw_deg = math.degrees(yaw)
-
-    return pitch_deg, yaw_deg
-
-
-#########################################################################################################################################
-
-
-
-
-
-
-
-
-"""
 camera_center = []
 matrix = []
 angle = []
@@ -105,73 +155,6 @@ for shot in rec.shots.values():
 print(camera_center)
 
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-#separate rotation and traslation tab in 3
-rotation_X = []
-rotation_Y = []
-rotation_Z = []
-translation_X = []
-translation_Y = []
-translation_Z = []
-
-i=0
-
-for i in range(len(rotation_data)):
-
-    temp = rotation_data[i]
-    temp1 = translation_data[i]
-    j=0
-    rotation_X.append(temp[j])
-    rotation_Y.append(temp[j+1])
-    rotation_Z.append(temp[j+2])
-
-    translation_X.append(temp1[j])
-    translation_Y.append(temp1[j+1])
-    translation_Z.append(temp1[j+2])
-
-un = 2
-deux = 1
-pitch, yaw = convert_to_pitch_yaw(translation_X[un],translation_Y[un],translation_Z[un],translation_X[deux],translation_Y[deux],translation_Z[deux])
-print("Pitch:", pitch)
-print("Yaw:", yaw)
-
-
-
-#use fonction to get pitch and yaw
-pitch_Tab = []
-yaw_Tab = []
-
-i=0
-for i in range(len(rotation_data)):
-
-    pitch = calculate_pitch(rotation_X[i],rotation_Y[i],rotation_Z[i])
-    yaw = calculate_yaw(rotation_X[i],rotation_Y[i])
-
-    pitch_Tab.append(pitch)
-    yaw_Tab.append(yaw)
-"""
-
-
 
 
 
