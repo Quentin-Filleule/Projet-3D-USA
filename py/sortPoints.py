@@ -55,12 +55,10 @@ for object in data:
             tab_trans.append(translation)
 
 k = 2
-
+# For each panorama, estimate the k=2 closest panoramas
 neighbors = k_nearest_neighbors(tab_trans, k)
 for i, point in enumerate(tab_trans):
     print(f"the {k} nearest neighbors of {shots_data[i]} are : {', '.join(str(shots_data[j]) for j in neighbors[i])}")
-
-print(neighbors)
 
 
 # load json destination
@@ -73,6 +71,7 @@ dest_data['neighbors'] = neighbors
 with open('../json/coordinates_rota_trans.json', 'w') as dest_file:
     json.dump(dest_data, dest_file, indent=4)
 
+#Display result on graph to check errors
 center_X = []
 center_Y = []
 center_Z = []

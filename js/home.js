@@ -5,10 +5,11 @@ import * as sc from './scene.js';
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 //Create Scenes with Hotspots
-//First you need too create all the HP because you need them in createScene()
+//First you need too create all the HP (HotSpot) because you need them in createScene()
 
 // represente the number of panorama that we have
 var nb_pano = data_camera.neighbor_pitch_yaw.length;
+// represente the number of neighbor for each panorama that we have
 var nb_neighbor = data_camera.neighbor_pitch_yaw[0].length;
 
 //to use the data of our pitch and yaw : 
@@ -37,8 +38,6 @@ for (let i = 0; i < nb_pano; i++) {
   }
 }
 
-console.log(hp_tab);
-
 // creation of every scene with coresponding hp
 let scene_tab = [];
 var neighbor_id = 0;
@@ -56,7 +55,7 @@ for (let i = 0; i < nb_pano; i++) {
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
-// Configuration Pannellum
+// Configuration Pannellum 
   var configHome = {
     type: "equirectangular",
     autoLoad:true,
@@ -78,6 +77,7 @@ for (let i = 0; i < scene_tab.length; i++)
   viewer.addScene(scene_name,scene_tab[i]);
 }
 
+//scene you want to load first
 viewer.loadScene('scene0');
 
 

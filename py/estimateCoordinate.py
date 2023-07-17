@@ -1,6 +1,6 @@
 import math
 import json
-from scipy.spatial.transform import Rotation as R
+#from scipy.spatial.transform import Rotation as R
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -21,10 +21,11 @@ def point_camera(camera_pos, camera_target):
     direction_y = direction_x
     direction_x = tampon
 
-
+    # Estimate pitch and yaw based on traslation coordinate
     pitch = math.atan2(direction_z, math.sqrt(direction_x**2 + direction_y**2))
     yaw = math.atan2(direction_y, direction_x)
 
+    # convert into deggree ( unit used in Pannellum)
     pitch_deg = math.degrees(pitch)
     yaw_deg = math.degrees(yaw)
 
@@ -45,7 +46,7 @@ i = 0
 j = 0
 
 neighbor_pitch_yaw = []
-#
+# Compute pitch and yaw for every images and put it into array to use it in json
 for i in range((len(neighbors_data))): 
 
     img = str(i)

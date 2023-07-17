@@ -9,9 +9,6 @@ export function createHotSpots(pitch, yaw, type, sceneId, targetPitch, targetYaw
       targetPitch: targetPitch,
       targetYaw: targetYaw,
     }
-    // Ajoutez d'autres points chauds ici
-  
-
   return hotSpots;
 }
 
