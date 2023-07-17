@@ -5,14 +5,9 @@ import os , os.path
 import sys
 import shutil
 
-############################################ Disclaimer !!!! #############################################################################
-# Befor start this pipeline, you have to be use the virtual env
-# To do that you have to be in the main directory (Pannellum)
-# source 3dproj/bin/activate
-# 3dproj is the name of my Venv
-##########################################################################################################################################
-os.chdir("..")
 
+os.chdir("..")
+# "dir" is the main directory
 dir = os.getcwd()
 
 #####################  Delete previous files  ############################################################################################
@@ -101,6 +96,7 @@ os.system("python3 ./estimateCoordinate.py")
 
 
 # In case we need to see the result in OpenSFM viewver
+
 """
 os.chdir(dir)
 os.chdir('Opensfm/OpenSfM')
