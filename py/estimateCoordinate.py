@@ -22,7 +22,7 @@ def point_camera(camera_pos, camera_target):
     direction_x = tampon
 
     # Estimate pitch and yaw based on traslation coordinate
-    pitch = math.atan2(direction_z, math.sqrt(direction_x**2 + direction_y**2))
+    pitch = math.atan2(-direction_z, math.sqrt(direction_x**2 + direction_y**2))
     yaw = math.atan2(direction_y, direction_x)
 
     # convert into deggree ( unit used in Pannellum)

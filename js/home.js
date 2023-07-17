@@ -78,7 +78,7 @@ for (let i = 0; i < scene_tab.length; i++)
 }
 
 //scene you want to load first
-viewer.loadScene('scene0');
+viewer.loadScene('scene15');
 
 
 
