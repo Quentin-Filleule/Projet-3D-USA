@@ -22,6 +22,17 @@ def k_nearest_neighbors(points, k):
         neighbors[i] = [j for _, j in distances[:k]]
     return neighbors
 
+
+
+#Estimate pitch and yaw based on pixel coordinates
+def pixel_to_pitch_yaw(x, y):
+    
+    yaw = x * 180
+    pitch = math.asin(y) * 180 / math.pi
+
+    return pitch, yaw
+
+
 ############################################################################################################################################
 
 tab_trans = []
